@@ -1,163 +1,233 @@
-# README
+# 🤖 PPT Copilot
 
-2023.8.18 : 更新下具体原理供各位参考:
+> AI-Powered PPT Generation and Editing Platform | 基于AI的智能PPT生成与编辑平台
 
-我们的前端有两个界面，一个是项目管理界面，基于vue-element-admin修改，不过后期由于我个人的喜好将element换成了腾讯的tdesign库；一个是ppt编辑界面，基于g站上pptist修改而来，该项目ppt的内部表示方式是JSON，这就给我们修改的空间
+<div align="center">
 
-我们的后端是基于beego框架从0搭建
+![PPT Copilot Logo](screenshots/logo.png)
 
-如果要运行起来，你要去后端的conf里加入你的OPENAI API KEY，然后也需要Clash代理本地7890端口
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue)](https://www.docker.com/)
+[![Ollama](https://img.shields.io/badge/Ollama-Supported-green)](https://ollama.ai/)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D)](https://vuejs.org/)
+[![Go](https://img.shields.io/badge/Go-1.20-00ADD8)](https://golang.org/)
 
-生成PPT的流程是：
+[English](#english) | [中文](#中文)
 
-1. 前端接受到一个ppt的主题(topic)，发送到后端
-2. 后端请求chatgpt，返回一个xml格式的大纲，这是我们的prompt工程
-3. 后端返回大纲到前端，前端进行解析并让用户修改
-4. 前端将修改后的PPT发送到后端
-5. 后端将xml中的每一页概述发给chatgpt，进行请求，得到有具体内容的xml，这样能突破chatgpt的字数限制，可以生成任意多ppt
-6. 数据库中事先存了一些ppt模版，这些ppt模版遵循固定格式，方便进行文本替换，如`{{title}}`之类
-   进行文本替换，得到完整ppt
-7. 代表ppt的JSON返回给前端，直接渲染、展示
+</div>
 
-## 项⽬简介
+## 中文
 
-本⽹站旨在打造⼀个提供能够根据由⾃然语⾔描述的需求，基于ChatGPT提供的NLP服务，⾃动⽣成内容符合需求描述的格式化⽂档。该格式化⽂档中的内容描述了PPT⽂档的幻灯⽚分⻚，每个幻灯⽚分⻚中的主标题内容、N级标题和主要⻚⾯内容。再将格式化⽂档的内容转为PPT⽂档，从⽽能够在线对于其样式（包括⼀般⽂本框、图⽚、图形等元素对象的⼤⼩，位置，颜⾊等等）进⾏编辑的⽂档处理聚合平台，为⼴⼤有⽂档⾃动化⽣成和在线处理需求的相关⾏业从业者提供相关服务。
+### ✨ 特性
 
-在线使用地址:http://...(学校经费停了)
+- 🤖 **AI智能生成**：基于主题自动生成PPT大纲和内容
+- 📝 **内容填充**：AI智能填充每页PPT的详细内容  
+- 🎨 **在线编辑**：功能强大的在线PPT编辑器
+- 👥 **用户管理**：完整的用户注册、登录、项目管理系统
+- 🏠 **本地模型**：支持Ollama本地AI模型，无需API费用
+- 🐳 **容器化部署**：Docker一键部署，环境一致
+- 🔒 **数据安全**：支持本地部署，数据完全可控
 
-以下是项⽬的部分演⽰截图：
+### 🛠️ 技术栈
 
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/start.png)
+- **前端**: Vue.js 3 + Element UI + TDesign
+- **后端**: Go + Beego Framework
+- **数据库**: MySQL 8.0
+- **编辑器**: Canvas + ProseMirror
+- **AI模型**: OpenAI GPT / Local Ollama
+- **部署**: Docker + Docker Compose
 
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/ground.png)
+### 🚀 快速开始
 
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/yanshi.png)
+#### 环境要求
+- Docker & Docker Compose
+- Git
+- 8GB+ 内存（推荐）
 
-## 使⽤说明
-
-### 浏览ppt项⽬、收藏项⽬、克隆项⽬、查看项⽬信息：
-
-在项⽬⼴场⻚⾯，展⽰现有的所有项⽬
-
-⻚⾯导航栏中具有⼀个“搜索”的按钮，可以点击，输⼊信息，对项⽬进⾏搜索
-
-点击项⽬⼴场中的项⽬，可以查看该项⽬的详细信息与⽂件
-
-在显⽰项⽬详细信息的⻚⾯，可以通过“添加收藏”按钮对项⽬进⾏收藏，并可以在个⼈空间中看⻅收藏的项⽬
-
-在显⽰项⽬详细信息的⻚⾯，可以通过“克隆项⽬”按钮对项⽬进⾏克隆，并可以在我的项⽬中看⻅克隆的项⽬，并可以看⻅并编辑其下所有⽂件
-
-### 新建、删除项⽬、更新项⽬信息：
-
-⽤⼾可以在我的项⽬⻚⾯点击“新建项⽬”按钮，来添加新的项⽬
-
-⽤⼾可以在我的项⽬⻚⾯中对特定项⽬点击“更多”中的“删除”，来删除已有项⽬
-
-⽤⼾在显⽰项⽬详细信息的⻚⾯，可以通过点击“编辑信息”按钮对项⽬的名称与简介进⾏编辑，完成后点击“保存信息”即可完成信息更新
-
-⽤⼾可以在我的项⽬⻚⾯中对特定项⽬点击“更多”中的“上传封⾯”并上传图⽚⽂件，来更新该项⽬的封⾯
-
-### 上传、删除、下载、重命名⽂件：
-
-⽤⼾在显⽰项⽬详细信息的⻚⾯，可以通过点击“上传⽂件”按钮进⾏⽂件上传
-
-⽤⼾在显⽰项⽬详细信息的⻚⾯中的⽂件列表中，可以通过点击特定⽂件“更多”中的“删除”
-
-按钮进⾏⽂件删除⽤⼾在显⽰项⽬详细信息的⻚⾯中的⽂件列表中，可以通过点击特定⽂件“更多”中的“下载”按钮进⾏⽂件下载
-
-⽤⼾在显⽰项⽬详细信息的⻚⾯中的⽂件列表中，可以通过点击特定⽂件“更多”中的“重命名”按钮进⾏⽂件重命名
-
-### PPT⽣成、修改、删除：
-
-⽤⼾在显⽰项⽬详细信息的⻚⾯，可以通过点击“新建PPT”按钮进⾏PPT⽣成，在跳出的
-
-对话框中输⼊幻灯⽚标题并确认：
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/confirm.png)
-
-在接下来的⻚⾯中输⼊主题与汇报⼈姓名，选择模板，点击创建ppt:
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/template.png)
-
-等待⼀段时间后会显⽰⼤纲，点击右边的“Append”和“Edit”可对⼤纲进⾏编辑：
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/outline.png)
-
-点击“创建ppt”按钮并等待⼀段时间（时间较⻓，若中间出现蓝⾊模板，请不要操作继续等待），显⽰PPT编辑⻚⾯：
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/ppt.png)
-
-使⽤⿏标键盘和右边功能栏可对PPT进⾏编辑，具体使⽤⽅法⻅附录
-
-退出该界⾯后，项⽬详情⻚会出现对应的.json⽂件：
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/file.png)
-
-按照对⽂件的处理⽅法可对该⽂件进⾏重命名、下载和删除操作
-
-若要修改PPT内容，可点击“打开”按钮，等待⼀段时间，跳转到PPT编辑⻚⾯进⾏编辑，
-
-完成后点击右上⻆“导出”按钮，选择“保存到云端”即可完成修改
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/store.png)
-
-![""](https://raw.githubusercontent.com/hughdazz/PPTCopilot/master/.image/export.png)
-
-### 注册,登录,注销,个⼈信息维护功能：
-
-⽤⼾在登录界⾯底端点击“注册”，给出⽤⼾名、密码以及邮箱来注册⾃⼰在本系统中的账号
-
-在注册账号后，⽤⼾可以在登录界⾯输⼊⽤⼾名/邮箱和密码登录账号，并且正常使⽤系统的各个功能
-
-在登录了账号之后，⽤⼾可以通过点击导航栏右上⻆的“登出”按钮来退出当前登录的账号
-
-⽤⼾还可以通过个⼈中⼼的“上传头像”来修改⾃⼰的⽤⼾头像，进⾏个⼈信息的维护
-
-## docker-compose部署
-
-支持一键部署
-
+#### 1. 克隆项目
 ```bash
-docker-compose up
-# 或
-docker-compose up -d # 后台运行
+git clone --recursive https://github.com/yourusername/PPTCopilot.git
+cd PPTCopilot
 ```
 
-如果希望在本地运行，在docker-compose.yaml里修改相关的SERVER_IP灯信息
-
-```yaml
-      # ...
-        MYSQL_HOST: mysqldb
-        MYSQL_PORT: 3306
-        SERVER_IP: "localhost"
-```
-
-也可以分别部署一部分服务
-
-- 后端
-
-  ```bash
-  docker-compose up pptcopilot-backend
-  ```
-
-- 前端
-
-  ```bash
-  docker-compose up pptcopilot-project pptcopilot-editor
-  ```
-
-在源码进行更新时，若要重新部署，请用
-
+#### 2. 启动系统
 ```bash
-docker-compose build
+# 启动所有服务
+docker-compose up -d
+
+# 查看服务状态
+docker-compose ps
 ```
 
-停止服务
+#### 3. 访问系统
+- **项目管理**: http://localhost:9529
+- **PPT编辑器**: http://localhost:7777  
+- **后端API**: http://localhost:8080
 
+#### 4. 默认账号
+- 用户名: `hughdazz`
+- 密码: `123456`
+
+### 🤖 AI配置
+
+#### 选项1：使用Ollama（推荐）
 ```bash
-docker-compose down
+# 安装Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# 下载模型
+ollama pull qwen3:4b-instruct
+
+# 启动服务  
+ollama serve
 ```
 
-## 维护者
+#### 选项2：使用OpenAI
+```bash
+# 复制配置模板
+cp PPTCopilot-backend/conf/gpt.conf.template PPTCopilot-backend/conf/gpt.conf
 
-该项⽬⽬前由同济⼤学计算机科学与技术系WinterIsComming⼩组开发维护。
+# 编辑配置文件，添加您的API密钥
+vim PPTCopilot-backend/conf/gpt.conf
+```
+
+### 📖 使用指南
+
+1. **访问系统**：打开 http://localhost:9529
+2. **登录/注册**：使用默认账号或注册新账号
+3. **创建项目**：点击"新建项目"
+4. **生成PPT**：
+   - 点击"新建PPT"
+   - 输入主题（如"人工智能发展趋势"）
+   - 选择模板
+   - 等待AI生成大纲
+   - 确认后生成详细内容
+5. **在线编辑**：使用编辑器调整样式和内容
+
+### 📁 项目结构
+
+```
+PPTCopilot/
+├── docker-compose.yaml          # Docker编排配置
+├── PPTCopilot-backend/          # Go后端服务
+├── PPTCopilot-editor/           # Vue.js编辑器
+├── PPTCopilot-project/          # Vue.js项目管理
+├── 使用手册.md                   # 详细使用说明
+└── GitHub上传指南.md             # GitHub部署指南
+```
+
+### 🤝 贡献
+
+欢迎提交Issue和Pull Request！
+
+### 📄 许可证
+
+MIT License - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+## English
+
+### ✨ Features
+
+- 🤖 **AI-Powered Generation**: Automatically generate PPT outlines and content based on topics
+- 📝 **Content Filling**: Intelligently fill detailed content for each PPT slide
+- 🎨 **Online Editor**: Powerful online PPT editor with rich features
+- 👥 **User Management**: Complete user registration, login, and project management system
+- 🏠 **Local Models**: Support for Ollama local AI models, no API fees required
+- 🐳 **Containerized**: One-click Docker deployment with consistent environments
+- 🔒 **Data Security**: Support for local deployment with full data control
+
+### 🛠️ Tech Stack
+
+- **Frontend**: Vue.js 3 + Element UI + TDesign
+- **Backend**: Go + Beego Framework
+- **Database**: MySQL 8.0
+- **Editor**: Canvas + ProseMirror
+- **AI Models**: OpenAI GPT / Local Ollama
+- **Deployment**: Docker + Docker Compose
+
+### 🚀 Quick Start
+
+#### Requirements
+- Docker & Docker Compose
+- Git
+- 8GB+ Memory (Recommended)
+
+#### 1. Clone Repository
+```bash
+git clone --recursive https://github.com/yourusername/PPTCopilot.git
+cd PPTCopilot
+```
+
+#### 2. Start System
+```bash
+# Start all services
+docker-compose up -d
+
+# Check service status
+docker-compose ps
+```
+
+#### 3. Access System
+- **Project Management**: http://localhost:9529
+- **PPT Editor**: http://localhost:7777
+- **Backend API**: http://localhost:8080
+
+#### 4. Default Account
+- Username: `hughdazz`
+- Password: `123456`
+
+### 🤖 AI Configuration
+
+#### Option 1: Use Ollama (Recommended)
+```bash
+# Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Download model
+ollama pull qwen3:4b-instruct
+
+# Start service
+ollama serve
+```
+
+#### Option 2: Use OpenAI
+```bash
+# Copy configuration template
+cp PPTCopilot-backend/conf/gpt.conf.template PPTCopilot-backend/conf/gpt.conf
+
+# Edit configuration file, add your API key
+vim PPTCopilot-backend/conf/gpt.conf
+```
+
+### 📖 Usage Guide
+
+1. **Access System**: Open http://localhost:9529
+2. **Login/Register**: Use default account or register new account
+3. **Create Project**: Click "New Project"
+4. **Generate PPT**:
+   - Click "New PPT"
+   - Enter topic (e.g., "AI Development Trends")
+   - Select template
+   - Wait for AI to generate outline
+   - Confirm and generate detailed content
+5. **Online Edit**: Use editor to adjust styles and content
+
+### 🤝 Contributing
+
+Issues and Pull Requests are welcome!
+
+### 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
+---
+
+<div align="center">
+
+**Made with ❤️ by PPT Copilot Team**
+
+[Documentation](使用手册.md) • [GitHub Guide](GitHub上传指南.md) • [Issues](https://github.com/yourusername/PPTCopilot/issues)
+
+</div>

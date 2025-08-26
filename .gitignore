@@ -1,0 +1,93 @@
+# 编译产物
+dist/
+build/
+*.o
+*.a
+*.so
+*.exe
+
+# 依赖包
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+# 日志文件
+*.log
+logs/
+
+# 环境配置
+.env
+.env.local
+.env.production
+
+# 敏感配置文件（保留模板）
+**/conf/gpt.conf
+**/conf/emailverify.conf
+!**/conf/*.conf.template
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Docker数据
+docker-compose.override.yml
+volumes/
+
+# 临时文件
+tmp/
+temp/
+.cache/
+.tmp/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 备份文件
+*.backup
+*.bak
+
+# 测试文件
+coverage/
+*.cover
+.coverage
+
+# 操作系统
+*.orig
+.fuse_hidden*
+
+# 特定于项目的忽略
+static/user/*/
+static/template/*/
+scripts/connect.sh
+
+# 用户上传的文件
+uploads/
+static/project/*/
+
+# Docker volumes
+data/
+mysql-data/
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# 本地开发文件
+.local/
+development.*
+
+# Package-lock 冲突文件
+package-lock.json.*
+yarn.lock.*
